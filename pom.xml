@@ -14,8 +14,6 @@
         <maven.compiler.target>8</maven.compiler.target>
 
         <!-- Versions -->
-        <mongodb.driver.version>3.12.10</mongodb.driver.version>
-        <mongodb.embedded.version>3.9.10</mongodb.embedded.version>
         <junit.jupiter.version>5.8.1</junit.jupiter.version>
         <mockito.version>4.0.0</mockito.version>
         <lombok.version>1.18.22</lombok.version>
@@ -33,22 +31,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-
-        <!-- Database -->
-        <dependency>
-            <groupId>io.vertx</groupId>
-            <artifactId>vertx-mongo-embedded-db</artifactId>
-            <version>${mongodb.embedded.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>${mongodb.driver.version}</version>
-        </dependency>
 
         <!-- Tests -->
         <dependency>
@@ -62,14 +44,6 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>${mockito.version}</version>
             <scope>test</scope>
-        </dependency>
-
-        <!-- Utils -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 
