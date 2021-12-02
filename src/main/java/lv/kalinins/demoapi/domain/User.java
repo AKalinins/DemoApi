@@ -11,7 +11,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REFRESH})
@@ -22,6 +22,7 @@ public class User {
     private String name;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserType type;
 
     public long getId() {
