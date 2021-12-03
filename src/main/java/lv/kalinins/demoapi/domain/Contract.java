@@ -11,6 +11,7 @@ import java.time.LocalDate;
 public class Contract {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
@@ -19,6 +20,7 @@ public class Contract {
     private User user;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ContractType type;
 
     @Column(name = "start_date", nullable = false)
