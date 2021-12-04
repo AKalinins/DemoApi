@@ -1,14 +1,7 @@
 package lv.kalinins.demoapi.controller.mapper;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Component;
+public interface Mapper<T, S> {
 
-@Component
-public class Mapper {
-
-    private final ModelMapper modelMapper = new ModelMapper();
-
-    public ModelMapper getModelMapper() {
-        return modelMapper;
-    }
+    S convertToDto(T entity);
+    T convertToEntity(S dto);
 }

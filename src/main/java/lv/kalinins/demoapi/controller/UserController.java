@@ -1,7 +1,7 @@
 package lv.kalinins.demoapi.controller;
 
 import lv.kalinins.demoapi.controller.dto.UserDto;
-import lv.kalinins.demoapi.controller.mapper.UserMapper;
+import lv.kalinins.demoapi.controller.mapper.impl.UserMapper;
 import lv.kalinins.demoapi.domain.User;
 import lv.kalinins.demoapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
