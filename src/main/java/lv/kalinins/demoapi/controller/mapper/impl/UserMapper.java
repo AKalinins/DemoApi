@@ -1,24 +1,24 @@
 package lv.kalinins.demoapi.controller.mapper.impl;
 
-import lv.kalinins.demoapi.controller.dto.UserDto;
+import lv.kalinins.demoapi.controller.dto.UserInputDto;
+import lv.kalinins.demoapi.controller.dto.UserResponseDto;
 import lv.kalinins.demoapi.controller.mapper.Mapper;
 import lv.kalinins.demoapi.domain.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper implements Mapper<User, UserDto> {
+public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
 
     private static final ModelMapper mapper = new ModelMapper();
 
     @Override
-    public UserDto convertToDto(User user) {
-        return mapper.map(user, UserDto.class);
+    public UserResponseDto convertToResponseDto(User user) {
+        return mapper.map(user, UserResponseDto.class);
     }
 
     @Override
-    public User convertToEntity(UserDto userDto) {
-        userDto.setId(0);
+    public User convertToEntity(UserInputDto userDto) {
         return mapper.map(userDto, User.class);
     }
 }

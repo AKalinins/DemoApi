@@ -1,7 +1,7 @@
 package lv.kalinins.demoapi.controller.mapper;
 
-public interface Mapper<T, S> {
+public interface Mapper<O, D, R> {
 
-    S convertToDto(T entity);
-    T convertToEntity(S dto);
+    R convertToResponseDto(O entity);
+    O convertToEntity(D dto);
 }

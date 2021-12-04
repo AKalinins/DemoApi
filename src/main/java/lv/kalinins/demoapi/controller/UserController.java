@@ -1,10 +1,12 @@
 package lv.kalinins.demoapi.controller;
 
-import lv.kalinins.demoapi.controller.dto.UserDto;
+import lv.kalinins.demoapi.controller.dto.UserInputDto;
+import lv.kalinins.demoapi.controller.dto.UserResponseDto;
 import lv.kalinins.demoapi.controller.mapper.impl.UserMapper;
 import lv.kalinins.demoapi.domain.User;
 import lv.kalinins.demoapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -20,21 +22,23 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping("")
-    public UserDto addUser(@RequestBody UserDto userDto) {
+    public UserResponseDto addUser(@RequestBody UserInputDto userDto) {
         User user = userMapper.convertToEntity(userDto);
-        user = userService.save(user);
-        return userMapper.convertToDto(user);
+        try {
+            user = userService.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid request body");
+        }
+        return userMapper.convertToResponseDto(user);
     }
 
     @GetMapping("/{userId}")
-    public UserDto getUser(@PathVariable long userId) {
+    public UserResponseDto getUser(@PathVariable long userId) {
         Optional<User> optionalUser = userService.getById(userId);
         if (optionalUser.isPresent()) {
-            return userMapper.convertToDto(optionalUser.get());
+            return userMapper.convertToResponseDto(optionalUser.get());
         }
-        throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "entity not found"
-        );
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
     }
 
     @Autowired
