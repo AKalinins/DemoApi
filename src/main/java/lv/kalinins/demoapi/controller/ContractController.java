@@ -19,20 +19,20 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1/contract")
 public class ContractController {
 
     private ContractService contractService;
     private ContractMapper contractMapper;
     private UserService userService;
 
-    @PostMapping("/contract")
+    @PostMapping("")
     public ContractResponseDto addContract(@RequestBody ContractInputDto contractDto) {
 
         Optional<User> optionalUser = userService.getById(contractDto.getUserId());
 
         if (!optionalUser.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user not found");
         }
 
         Contract contract = contractMapper.convertToEntity(contractDto);
