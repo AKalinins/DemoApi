@@ -5,17 +5,19 @@ import lv.kalinins.demoapi.controller.dto.ContractResponseDto;
 import lv.kalinins.demoapi.controller.mapper.impl.ContractMapper;
 import lv.kalinins.demoapi.domain.Contract;
 import lv.kalinins.demoapi.domain.User;
+import lv.kalinins.demoapi.domain.enums.ContractType;
+import lv.kalinins.demoapi.domain.enums.UserType;
 import lv.kalinins.demoapi.service.ContractService;
 import lv.kalinins.demoapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +27,8 @@ public class ContractController {
     private ContractService contractService;
     private ContractMapper contractMapper;
     private UserService userService;
+
+    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @PostMapping("")
     public ContractResponseDto addContract(@RequestBody ContractInputDto contractDto) {
@@ -44,6 +48,33 @@ public class ContractController {
         }
 
         return contractMapper.convertToResponseDto(contract);
+    }
+
+    @GetMapping("")
+    public List<ContractResponseDto> getContracts(
+        @RequestParam(required = false) String startDate,
+        @RequestParam(required = false) String type,
+        @RequestParam(required = false) String userName,
+        @RequestParam(required = false) String userType
+    ) {
+
+        ContractType contractType = null;
+        if (null != type) {
+            contractType = ContractType.valueOf(type.toUpperCase());
+        }
+
+        UserType userTypeEnum = null;
+        if (null != userType) {
+            userTypeEnum = UserType.valueOf(userType);
+        }
+
+        LocalDate date = null;
+        if (null != startDate) {
+            date = LocalDate.parse(startDate, FORMATTER);
+        }
+
+        List<Contract> contracts = contractService.getBy(date, contractType, userName, userTypeEnum);
+        return contractMapper.convertAllToResponseDto(contracts);
     }
 
     @Autowired

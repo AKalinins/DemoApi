@@ -7,6 +7,9 @@ import lv.kalinins.demoapi.domain.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
 
@@ -23,5 +26,14 @@ public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
             userDto.setType(userDto.getType().toUpperCase());
         } catch (NullPointerException ignored) {}
         return mapper.map(userDto, User.class);
+    }
+
+    @Override
+    public List<UserResponseDto> convertAllToResponseDto(List<User> entities) {
+        List<UserResponseDto> result = new ArrayList<>();
+        for (User entity : entities) {
+            result.add(convertToResponseDto(entity));
+        }
+        return result;
     }
 }

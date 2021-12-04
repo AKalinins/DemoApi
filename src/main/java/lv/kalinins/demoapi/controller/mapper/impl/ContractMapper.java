@@ -7,6 +7,9 @@ import lv.kalinins.demoapi.domain.Contract;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ContractMapper implements Mapper<Contract, ContractInputDto, ContractResponseDto> {
 
@@ -23,5 +26,14 @@ public class ContractMapper implements Mapper<Contract, ContractInputDto, Contra
             dto.setType(dto.getType().toUpperCase());
         } catch (NullPointerException ignored) {}
         return mapper.map(dto, Contract.class);
+    }
+
+    @Override
+    public List<ContractResponseDto> convertAllToResponseDto(List<Contract> entities) {
+        List<ContractResponseDto> result = new ArrayList<>();
+        for (Contract entity : entities) {
+            result.add(convertToResponseDto(entity));
+        }
+        return result;
     }
 }
