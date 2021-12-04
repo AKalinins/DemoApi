@@ -19,6 +19,7 @@ public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
 
     @Override
     public User convertToEntity(UserInputDto userDto) {
+        userDto.setType(userDto.getType().toUpperCase());
         return mapper.map(userDto, User.class);
     }
 }
