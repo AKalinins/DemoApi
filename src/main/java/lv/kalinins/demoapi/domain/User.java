@@ -1,7 +1,6 @@
 package lv.kalinins.demoapi.domain;
 
 import lv.kalinins.demoapi.domain.enums.UserType;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,8 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.REFRESH})
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST})
     private List<Contract> contracts;
 
     @Column(nullable = false)
@@ -27,6 +25,10 @@ public class User {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public List<Contract> getContracts() {

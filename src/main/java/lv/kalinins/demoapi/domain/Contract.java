@@ -1,7 +1,6 @@
 package lv.kalinins.demoapi.domain;
 
 import lv.kalinins.demoapi.domain.enums.ContractType;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,9 +13,8 @@ public class Contract {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private User user;
 
     @Column(nullable = false)

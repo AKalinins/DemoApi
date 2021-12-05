@@ -8,7 +8,6 @@ import lv.kalinins.demoapi.domain.User;
 import lv.kalinins.demoapi.domain.enums.ContractType;
 import lv.kalinins.demoapi.domain.enums.UserType;
 import lv.kalinins.demoapi.service.ContractService;
-import lv.kalinins.demoapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/contract")
@@ -26,19 +24,14 @@ public class ContractController {
 
     private ContractService contractService;
     private ContractMapper contractMapper;
-    private UserService userService;
 
     @PostMapping("")
     public ContractResponseDto addContract(@RequestBody ContractInputDto contractDto) {
 
-        Optional<User> optionalUser = userService.getById(contractDto.getUserId());
-
-        if (!optionalUser.isPresent()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "user not found");
-        }
-
         Contract contract = contractMapper.convertToEntity(contractDto);
-        contract.setUser(optionalUser.get());
+        contract.setUser(new User());
+        contract.getUser().setId(contractDto.getUserId());
+
         try {
             contract = contractService.save(contract);
         } catch (DataIntegrityViolationException e) {
@@ -67,10 +60,5 @@ public class ContractController {
     @Autowired
     public void setContractMapper(ContractMapper contractMapper) {
         this.contractMapper = contractMapper;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 }
