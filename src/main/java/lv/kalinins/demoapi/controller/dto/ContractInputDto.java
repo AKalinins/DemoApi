@@ -1,18 +1,20 @@
 package lv.kalinins.demoapi.controller.dto;
 
+import lv.kalinins.demoapi.domain.enums.ContractType;
+
 import java.time.LocalDate;
 
 public class ContractInputDto {
 
-    private String type;
+    private ContractType type;
     private LocalDate startDate;
     private long userId;
 
-    public String getType() {
+    public ContractType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ContractType type) {
         this.type = type;
     }
 

@@ -1,9 +1,11 @@
 package lv.kalinins.demoapi.controller.dto;
 
+import lv.kalinins.demoapi.domain.enums.UserType;
+
 public class UserInputDto {
 
     private String name;
-    private String type;
+    private UserType type;
 
     public String getName() {
         return name;
@@ -13,11 +15,11 @@ public class UserInputDto {
         this.name = name;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 }

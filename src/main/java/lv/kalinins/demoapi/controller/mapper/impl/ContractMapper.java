@@ -22,9 +22,6 @@ public class ContractMapper implements Mapper<Contract, ContractInputDto, Contra
 
     @Override
     public Contract convertToEntity(ContractInputDto dto) {
-        try {
-            dto.setType(dto.getType().toUpperCase());
-        } catch (NullPointerException ignored) {}
         return mapper.map(dto, Contract.class);
     }
 

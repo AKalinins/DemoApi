@@ -53,27 +53,17 @@ public class ContractController {
     @GetMapping("")
     public List<ContractResponseDto> getContracts(
             @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String type,
+            @RequestParam(required = false) ContractType type,
             @RequestParam(required = false) String userName,
-            @RequestParam(required = false) String userType
+            @RequestParam(required = false) UserType userType
     ) {
-
-        ContractType contractType = null;
-        if (null != type) {
-            contractType = ContractType.valueOf(type.toUpperCase());
-        }
-
-        UserType userTypeEnum = null;
-        if (null != userType) {
-            userTypeEnum = UserType.valueOf(userType.toUpperCase());
-        }
 
         LocalDate date = null;
         if (null != startDate) {
             date = LocalDate.parse(startDate, FORMATTER);
         }
 
-        List<Contract> contracts = contractService.getBy(date, contractType, userName, userTypeEnum);
+        List<Contract> contracts = contractService.getBy(date, type, userName, userType);
         return contractMapper.convertAllToResponseDto(contracts);
     }
 
