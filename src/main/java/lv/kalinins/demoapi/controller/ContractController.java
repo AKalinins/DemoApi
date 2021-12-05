@@ -11,20 +11,18 @@ import lv.kalinins.demoapi.service.ContractService;
 import lv.kalinins.demoapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/contract")
 public class ContractController {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private ContractService contractService;
     private ContractMapper contractMapper;
@@ -52,18 +50,12 @@ public class ContractController {
 
     @GetMapping("")
     public List<ContractResponseDto> getContracts(
-            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam(required = false) ContractType type,
             @RequestParam(required = false) String userName,
             @RequestParam(required = false) UserType userType
     ) {
-
-        LocalDate date = null;
-        if (null != startDate) {
-            date = LocalDate.parse(startDate, FORMATTER);
-        }
-
-        List<Contract> contracts = contractService.getBy(date, type, userName, userType);
+        List<Contract> contracts = contractService.getBy(startDate, type, userName, userType);
         return contractMapper.convertAllToResponseDto(contracts);
     }
 
