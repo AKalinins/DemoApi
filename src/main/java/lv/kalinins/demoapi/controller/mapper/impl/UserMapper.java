@@ -5,6 +5,7 @@ import lv.kalinins.demoapi.controller.dto.UserResponseDto;
 import lv.kalinins.demoapi.controller.mapper.Mapper;
 import lv.kalinins.demoapi.domain.User;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,16 +14,16 @@ import java.util.List;
 @Component
 public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
 
-    private static final ModelMapper mapper = new ModelMapper();
+    private ModelMapper modelMapper;
 
     @Override
     public UserResponseDto convertToResponseDto(User user) {
-        return mapper.map(user, UserResponseDto.class);
+        return modelMapper.map(user, UserResponseDto.class);
     }
 
     @Override
     public User convertToEntity(UserInputDto userDto) {
-        return mapper.map(userDto, User.class);
+        return modelMapper.map(userDto, User.class);
     }
 
     @Override
@@ -32,5 +33,10 @@ public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
             result.add(convertToResponseDto(entity));
         }
         return result;
+    }
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
     }
 }
