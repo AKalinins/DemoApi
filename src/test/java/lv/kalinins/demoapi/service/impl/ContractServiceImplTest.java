@@ -64,4 +64,20 @@ class ContractServiceImplTest {
         verify(repository, times(1))
                 .findContractByStartDateTypeUserNameAndUserType(localDate, contractType, userName, userType);
     }
+
+    /**
+     * {@link ContractServiceImpl#getByUserId(long)}
+     */
+    @Test
+    void shouldGetContractsByUserId() {
+
+        List<Contract> contracts = new ArrayList<>();
+
+        when(repository.findByUser_Id(1L)).thenReturn(contracts);
+
+        List<Contract> result = target.getByUserId(1L);
+
+        assertSame(contracts, result);
+        verify(repository, times(1)).findByUser_Id(1L);
+    }
 }

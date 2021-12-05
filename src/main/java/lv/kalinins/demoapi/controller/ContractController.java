@@ -52,6 +52,11 @@ public class ContractController {
         return contractMapper.convertAllToResponseDto(contracts);
     }
 
+    @GetMapping("/{userId}")
+    public List<ContractResponseDto> getUserContracts(@PathVariable long userId) {
+        return contractMapper.convertAllToResponseDto(contractService.getByUserId(userId));
+    }
+
     @Autowired
     public void setContractService(ContractService contractService) {
         this.contractService = contractService;

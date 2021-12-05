@@ -25,4 +25,6 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
             @Param("userName") String userName,
             @Param("userType") UserType userType
     );
+
+    List<Contract> findByUser_Id(long userId);
 }
