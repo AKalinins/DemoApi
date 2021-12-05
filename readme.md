@@ -1,3 +1,12 @@
+Tools used:<br/>
+Spring Boot<br/>
+Spring Data<br/>
+SpringDoc - API documentation<br/>
+H2 - in-memory relational database<br/>
+ModelMapper - DTO-Entity mapper<br/>
+JUnit<br/>
+Mockito<br/><br/>
+
 App uses the H2 in-memory database.<br/>
 Database is erased as soon as the application is stopped and recreated when application is started.<br/>
 Database console can be accessed using URL http://localhost:8080/h2-console 
