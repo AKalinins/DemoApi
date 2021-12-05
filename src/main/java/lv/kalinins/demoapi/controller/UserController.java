@@ -35,10 +35,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public UserResponseDto getUser(@PathVariable long userId) {
         Optional<User> optionalUser = userService.getById(userId);
-        if (optionalUser.isPresent()) {
-            return userMapper.convertToResponseDto(optionalUser.get());
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "entity not found");
+        return optionalUser.map(user -> userMapper.convertToResponseDto(user)).orElse(null);
     }
 
     @Autowired

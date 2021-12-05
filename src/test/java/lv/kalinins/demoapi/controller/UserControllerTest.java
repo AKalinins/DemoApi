@@ -110,17 +110,9 @@ class UserControllerTest {
 
         when(service.getById(1L)).thenReturn(Optional.empty());
 
-        UserResponseDto result = null;
-        ResponseStatusException exception = null;
-        try {
-            result = target.getUser(1L);
-        } catch (ResponseStatusException e) {
-            exception = e;
-        }
+        UserResponseDto result = target.getUser(1L);
 
         assertNull(result);
-        assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         verify(service, times(1)).getById(1L);
         verify(mapper, times(0)).convertToResponseDto(user);
     }
