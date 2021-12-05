@@ -27,8 +27,11 @@ class ContractMapperTest {
     @Mock
     private ModelMapper mapper;
 
+    /**
+     * {@link ContractMapper#convertToEntity(ContractInputDto)}
+     */
     @Test
-    void shouldMapContractDTOToEntity() {
+    void shouldMapInputDTOToEntity() {
 
         ContractInputDto dto = new ContractInputDto();
         target.convertToEntity(dto);
@@ -36,6 +39,9 @@ class ContractMapperTest {
         verify(mapper, times(1)).map(dto, Contract.class);
     }
 
+    /**
+     * {@link  ContractMapper#convertToResponseDto(Contract)}
+     */
     @Test
     void shouldMapEntityToResponseDTO() {
 
@@ -45,6 +51,9 @@ class ContractMapperTest {
         verify(mapper, times(1)).map(entity, ContractResponseDto.class);
     }
 
+    /**
+     * {@link ContractMapper#convertAllToResponseDto(List)}
+     */
     @Test
     void shouldMapAllEntitiesToResponseDTOs() {
 
