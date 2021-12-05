@@ -113,26 +113,4 @@ class ContractControllerTest {
         verify(mapper, times(1)).convertToEntity(inputDto);
         verify(mapper, times(0)).convertToResponseDto(contract);
     }
-
-    /**
-     * {@link ContractController#getUserContracts(long)}
-     */
-    @Test
-    void testGetContractsByUserId() {
-
-        List<Contract> contracts = new ArrayList<>();
-        contracts.add(new Contract());
-
-        List<ContractResponseDto> responseDtoList = new ArrayList<>();
-        responseDtoList.add(new ContractResponseDto());
-
-        when(contractService.getByUserId(1L)).thenReturn(contracts);
-        when(mapper.convertAllToResponseDto(contracts)).thenReturn(responseDtoList);
-
-        List<ContractResponseDto> result = target.getUserContracts(1L);
-
-        assertSame(responseDtoList, result);
-        verify(contractService, times(1)).getByUserId(1L);
-        verify(mapper, times(1)).convertAllToResponseDto(contracts);
-    }
 }

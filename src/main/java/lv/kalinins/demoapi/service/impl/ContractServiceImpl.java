@@ -28,11 +28,6 @@ public class ContractServiceImpl implements ContractService {
         return contractRepository.findContractByStartDateTypeUserNameAndUserType(startDate, type, userName, userType);
     }
 
-    @Override
-    public List<Contract> getByUserId(long userId) {
-        return contractRepository.findByUser_Id(userId);
-    }
-
     @Autowired
     public void setContractRepository(ContractRepository contractRepository) {
         this.contractRepository = contractRepository;

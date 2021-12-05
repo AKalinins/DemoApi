@@ -11,5 +11,4 @@ public interface ContractService {
 
     Contract save(Contract contract);
     List<Contract> getBy(LocalDate startDate, ContractType type, String userName, UserType userType);
-    List<Contract> getByUserId(long userId);
 }
