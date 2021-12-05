@@ -3,6 +3,7 @@ package lv.kalinins.demoapi.domain;
 import lv.kalinins.demoapi.domain.enums.UserType;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,10 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private UserType type;
+
+    public User() {
+        contracts = new ArrayList<>();
+    }
 
     public long getId() {
         return id;

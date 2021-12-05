@@ -2,6 +2,7 @@ package lv.kalinins.demoapi.controller.mapper.impl;
 
 import lv.kalinins.demoapi.controller.dto.UserInputDto;
 import lv.kalinins.demoapi.controller.dto.UserResponseDto;
+import lv.kalinins.demoapi.domain.Contract;
 import lv.kalinins.demoapi.domain.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,9 +15,10 @@ import org.modelmapper.ModelMapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserMapperTest {
@@ -46,7 +48,16 @@ class UserMapperTest {
     void shouldMapEntityToResponseDTO() {
 
         User entity = new User();
-        target.convertToResponseDto(entity);
+        entity.getContracts().add(new Contract());
+
+        UserResponseDto dto = new UserResponseDto();
+
+        when(mapper.map(entity, UserResponseDto.class)).thenReturn(dto);
+
+        UserResponseDto result = target.convertToResponseDto(entity);
+
+        assertSame(dto, result);
+        assertEquals(1, result.getNumberOfContracts());
 
         verify(mapper, times(1)).map(entity, UserResponseDto.class);
     }
@@ -60,6 +71,8 @@ class UserMapperTest {
         List<User> entities = new ArrayList<>();
         entities.add(new User());
         entities.add(new User());
+
+        when(mapper.map(any(), any())).thenReturn(new UserResponseDto());
 
         target.convertAllToResponseDto(entities);
 

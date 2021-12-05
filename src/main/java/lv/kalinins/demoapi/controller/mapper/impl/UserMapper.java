@@ -18,7 +18,9 @@ public class UserMapper implements Mapper<User, UserInputDto, UserResponseDto> {
 
     @Override
     public UserResponseDto convertToResponseDto(User user) {
-        return modelMapper.map(user, UserResponseDto.class);
+        UserResponseDto dto = modelMapper.map(user, UserResponseDto.class);
+        dto.setNumberOfContracts(user.getContracts().size());
+        return dto;
     }
 
     @Override

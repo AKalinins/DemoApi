@@ -2,14 +2,12 @@ package lv.kalinins.demoapi.controller.dto;
 
 import lv.kalinins.demoapi.domain.enums.UserType;
 
-import java.util.List;
-
 public class UserResponseDto {
 
     private long id;
     private String name;
     private UserType type;
-    private List<ContractResponseDto> contracts;
+    private long numberOfContracts;
 
     public long getId() {
         return id;
@@ -35,11 +33,11 @@ public class UserResponseDto {
         this.type = type;
     }
 
-    public List<ContractResponseDto> getContracts() {
-        return contracts;
+    public long getNumberOfContracts() {
+        return numberOfContracts;
     }
 
-    public void setContracts(List<ContractResponseDto> contracts) {
-        this.contracts = contracts;
+    public void setNumberOfContracts(long numberOfContracts) {
+        this.numberOfContracts = numberOfContracts;
     }
 }
