@@ -24,11 +24,11 @@ import java.util.Optional;
 @RequestMapping("/api/v1/contract")
 public class ContractController {
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     private ContractService contractService;
     private ContractMapper contractMapper;
     private UserService userService;
-
-    private final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @PostMapping("")
     public ContractResponseDto addContract(@RequestBody ContractInputDto contractDto) {
@@ -52,10 +52,10 @@ public class ContractController {
 
     @GetMapping("")
     public List<ContractResponseDto> getContracts(
-        @RequestParam(required = false) String startDate,
-        @RequestParam(required = false) String type,
-        @RequestParam(required = false) String userName,
-        @RequestParam(required = false) String userType
+            @RequestParam(required = false) String startDate,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String userType
     ) {
 
         ContractType contractType = null;
@@ -65,7 +65,7 @@ public class ContractController {
 
         UserType userTypeEnum = null;
         if (null != userType) {
-            userTypeEnum = UserType.valueOf(userType);
+            userTypeEnum = UserType.valueOf(userType.toUpperCase());
         }
 
         LocalDate date = null;

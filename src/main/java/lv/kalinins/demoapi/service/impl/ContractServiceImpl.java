@@ -25,7 +25,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<Contract> getBy(LocalDate startDate, ContractType type, String userName, UserType userType) {
-        return contractRepository.findContractByStartDateTypeUserNameAndUserType(startDate, type);
+        return contractRepository.findContractByStartDateTypeUserNameAndUserType(startDate, type, userName, userType);
     }
 
     @Autowired
